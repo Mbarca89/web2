@@ -1,0 +1,75 @@
+doctype html
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title= title
+        script(src="/bootstrap/js/bootstrap.bundle.min.js")
+        script(src="/toastify/toastify.js")
+        link(
+            href="/bootstrap/css/bootstrap.min.css"
+            rel="stylesheet"
+        )
+        link(rel="stylesheet" href="/toastify/toastify.css")
+    body.bg-light
+        main.container
+            .row.justify-content-center.align-items-center.min-vh-100   
+                .col-12.col-md-6.col-lg-4
+                    .card.shadow-sm.border-0.rounded-4
+                        .card-body.p-4
+                            h1.h3.text-center.mb-4 Iniciar Sesion
+
+                            form(action="/auth/login" method="POST")
+
+                                .mb-3
+                                    label.form-label(for="username") Usuario
+                                    input.form-control(
+                                        class=fieldErrors.username ? "is-invalid" : ""
+                                        type="text"
+                                        id="username"
+                                        name="username"
+                                        value=oldData.username || ""
+                                        placeholder="Usuario"
+                                    )
+                                    if fieldErrors.username
+                                        .invalid-feedback= fieldErrors.username
+
+                                .mb-3
+                                    label.form-label(for="username") Contraseña
+                                    input.form-control(
+                                        class=fieldErrors.password ? "is-invalid" : ""
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        value=oldData.password || ""
+                                        placeholder="Contraseña"
+                                    )
+                                    if fieldErrors.username
+                                        .invalid-feedback= fieldErrors.password
+                                button.btn.btn-primary.w-100(type="submit") Iniciar
+
+                                p.text-center.mt-3.mb-0
+                                    | ¿No tenes una cuenta?
+                                    a.ms-1(href="/auth/register") Registrate
+        script(src="/toastify/toastify.js")
+
+if successMessage
+    script.
+        Toastify({
+            text: "#{successMessage}",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            style: {
+                background: "#198754"
+            }
+        }).showToast();
+if errorMessage
+    script.
+        Toastify({
+          text: "#{errorMessage}",
+          duration: 4000,
+          gravity: "top",
+          position: "right",
+          style: { background: "#dc3545" }
+        }).showToast();
