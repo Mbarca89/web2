@@ -2,6 +2,11 @@ import { DataTypes } from "sequelize"
 import sequelize from "../config/db/db.js"
 
 const User = sequelize.define("User", {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   username: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -18,6 +23,23 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-})
+  role: {
+    type: DataTypes.STRING(20),
+    allowNull: false,
+    defaultValue: "USER",
+  },
+
+  active: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  },
+},
+  {
+    tableName: "users",
+    timestamps: true,
+    underscored: true,
+  }
+)
 
 export default User;

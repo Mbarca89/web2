@@ -1,0 +1,66 @@
+doctype html
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title= title
+        script(src="/bootstrap/js/bootstrap.bundle.min.js")
+    link(
+    href="/bootstrap/css/bootstrap.min.css"
+    rel="stylesheet"
+)
+
+    body.bg-light
+        main.container
+            .row.justify-content-center.align-items-center.min-vh-100
+                .col-12.col-md-6.col-lg-4
+                    .card.shadow-sm.border-0.rounded-4
+                        .card-body.p-4
+                            h1.h3.text-center.mb-4 Crear cuenta
+
+                            if error
+                                .alert.alert-danger(role="alert")= error
+
+                            form(action="/auth/register" method="POST")
+                                .mb-3
+                                    label.form-label(for="username") Usuario
+                                    input.form-control(
+                                        type="text"
+                                        id="username"
+                                        name="username"
+                                        value=oldData.username || ""
+                                        placeholder="Usuario"
+                                    )
+
+                                .mb-3
+                                    label.form-label(for="email") Email
+                                    input.form-control(
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        value=oldData.email || ""
+                                        placeholder="tu@email.com"
+                                    )
+
+                                .mb-3
+                                    label.form-label(for="password") Contraseña
+                                    input.form-control(
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        placeholder="Mínimo 6 caracteres"
+                                    )
+
+                                .mb-3
+                                    label.form-label(for="confirmPassword") Confirmar contraseña
+                                    input.form-control(
+                                        type="password"
+                                        id="confirmPassword"
+                                        name="confirmPassword"
+                                    )
+
+                                button.btn.btn-primary.w-100(type="submit") Registrarme
+
+                            p.text-center.mt-3.mb-0
+                                | ¿Ya tenés cuenta?
+                                a.ms-1(href="/auth/login") Iniciar sesión
