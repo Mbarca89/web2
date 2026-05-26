@@ -2,7 +2,7 @@ doctype html
 html(lang="es")
   head
     meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
 
     title= title
 
@@ -16,33 +16,20 @@ html(lang="es")
       href="/toastify/toastify.css"
     )
 
+    link(
+      rel="stylesheet"
+      href="/css/global.css"
+    )
+
+    block styles
+
   body.bg-light
+
+    include ../../components/navbar
 
     block content
 
+    include ../../components/toasters
+
     script(src="/bootstrap/js/bootstrap.bundle.min.js")
     script(src="/toastify/toastify.js")
-
-    if successMessage
-      script.
-        Toastify({
-          text: "!{successMessage}",
-          duration: 3000,
-          gravity: "top",
-          position: "right",
-          style: {
-            background: "#198754"
-          }
-        }).showToast()
-
-    if errorMessage
-      script.
-        Toastify({
-          text: "!{errorMessage}",
-          duration: 4000,
-          gravity: "top",
-          position: "right",
-          style: {
-            background: "#dc3545"
-          }
-        }).showToast()

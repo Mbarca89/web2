@@ -1,0 +1,40 @@
+nav.navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm.sticky-top.py-3
+  .container
+    a.navbar-brand.d-flex.align-items-center(href="/")
+      img(src="/img/fotaza-horizontal.webp" alt="Fotaza" height="42")
+
+    button.navbar-toggler(
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Abrir menu"
+    )
+      span.navbar-toggler-icon
+
+    #navbarNav.collapse.navbar-collapse
+      ul.navbar-nav.ms-auto.align-items-lg-center.gap-lg-2
+
+        li.nav-item
+          a.nav-link.fw-semibold.px-lg-3(href="/") Inicio
+
+        if currentUser
+          li.nav-item
+            a.nav-link.fw-semibold.px-lg-3(href="/posts/create") Publicar
+
+          li.nav-item
+            a.nav-link.fw-semibold.px-lg-3(href="/feed") Siguiendo
+
+          li.nav-item.ms-lg-3
+            span.nav-link.text-muted
+              | Hola, 
+              strong.text-dark= currentUser.username
+
+          li.nav-item
+            form(action="/auth/logout" method="POST")
+              button.btn.btn-outline-dark.rounded-pill.px-4(type="submit") Salir
+
+        else
+          li.nav-item
+            a.nav-link.fw-semibold.px-lg-3(href="/auth/login") Iniciar sesión

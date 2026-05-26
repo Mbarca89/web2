@@ -1,17 +1,6 @@
-doctype html
-html(lang="es")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport" content="width=device-width, initial-scale=1.0")
-        title= title
-        script(src="/bootstrap/js/bootstrap.bundle.min.js")
-        script(src="/toastify/toastify.js")
-        link(
-            href="/bootstrap/css/bootstrap.min.css"
-            rel="stylesheet"
-        )
-        link(rel="stylesheet" href="/toastify/toastify.css")
+extends ../layouts/main
 
+block content
     body.bg-light
         main.container
             .row.justify-content-center.align-items-center.min-vh-100
@@ -70,32 +59,8 @@ html(lang="es")
                                     if fieldErrors.confirmPassword
                                         .invalid-feedback= fieldErrors.confirmPassword
 
-                                button.btn.btn-primary.w-100(type="submit") Registrarme
+                                button.btn-fotaza.w-100(type="submit") Registrarme
 
                                 p.text-center.mt-3.mb-0
                                         | ¿Ya tenes una cuenta?
                                         a.ms-1(href="/auth/login") Iniciar sesion
-
-if errorMessage
-    script.
-        Toastify({
-            text: "#{errorMessage}",
-            duration: 4000,
-            gravity: "top",
-            position: "center",
-            style: {
-                background: "#dc3545"
-            }
-        }).showToast()
-
-if successMessage
-    script.
-        Toastify({
-            text: "#{successMessage}",
-            duration: 3000,
-            gravity: "top",
-            position: "center",
-            style: {
-                background: "#198754"
-            }
-        }).showToast()

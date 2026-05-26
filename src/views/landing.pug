@@ -1,0 +1,47 @@
+extends layouts/main
+
+block styles
+  link(
+    rel="stylesheet"
+    href="/css/landing.css"
+  )
+
+block content
+
+  section.container.py-5.py-lg-0
+    .row.min-vh-100.align-items-center.g-5
+
+      .col-12.col-lg-6.order-2.order-lg-1
+
+        img.mb-5(
+          src="/img/fotaza-horizontal.webp"
+          alt="Fotaza"
+          style="max-width: 320px;"
+        )
+
+        h1.hero-title.fw-bold.mb-4
+          | Tus fotos.
+          br
+          | Organizadas.
+          br
+          span.text-fotaza-gradient
+            | Siempre a mano.
+
+        p.hero-description.fs-4.text-secondary.mb-5
+          | Almacená, organizá, buscá, vendé y compartí
+          br.d-none.d-lg-block
+          | tus fotografías en un solo lugar.
+
+        .hero-actions.d-flex.flex-wrap.gap-3
+          a.btn.btn-fotaza.btn-lg.rounded-pill.px-5.py-3(
+            href="/auth/register"
+          )
+            | Explorar
+
+      .col-12.col-lg-6.order-1.order-lg-2
+        .hero-image.d-flex.justify-content-center
+          img(
+            src="/img/landing.webp"
+            alt="Galería Fotaza"
+            class="img-fluid"
+          )

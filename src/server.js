@@ -63,8 +63,8 @@ app.use((req, res, next) => {
 })
 
 app.use("/auth", authRoutes)
-app.get("/", requireAuth, (req, res) => {
-  res.render("landing/landing", {
+app.get("/", (req, res) => {
+  res.render("landing", {
     title: "Inicio",
   });
 });

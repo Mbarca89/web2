@@ -1,0 +1,56 @@
+:root {
+  --fotaza-dark: #111d35;
+  --fotaza-muted: #4b5870;
+
+  --fotaza-orange: #ff7a34;
+  --fotaza-pink: #e9438b;
+  --fotaza-purple: #8f45d9;
+
+  --fotaza-gradient:
+    linear-gradient(
+      90deg,
+      var(--fotaza-orange),
+      var(--fotaza-pink),
+      var(--fotaza-purple)
+    );
+}
+
+body {
+  color: var(--fotaza-dark);
+  background:
+    radial-gradient(circle at 18% 20%, rgba(255, 122, 52, 0.18), transparent 35%),
+    radial-gradient(circle at 75% 12%, rgba(233, 67, 139, 0.16), transparent 32%),
+    linear-gradient(135deg, #fffaf8 0%, #fff6fb 55%, #f6f1ff 100%);
+}
+
+.text-fotaza-gradient {
+  background: var(--fotaza-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.btn-fotaza {
+  border: none !important;
+  color: white !important;
+  background: var(--fotaza-gradient) !important;
+  box-shadow: 0 12px 28px rgba(233, 67, 139, 0.22);
+  transition: 0.2s ease;
+}
+
+.btn-fotaza:hover {
+  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(233, 67, 139, 0.28);
+}
+
+.btn-fotaza-outline {
+  border: 1px solid rgba(17, 29, 53, 0.12) !important;
+  background: rgba(255,255,255,0.7) !important;
+  color: var(--fotaza-dark) !important;
+  backdrop-filter: blur(12px);
+}
+
+.btn-fotaza-outline:hover {
+  background: white !important;
+}
