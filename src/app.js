@@ -28,10 +28,14 @@ app.locals.basedir = path.join(__dirname, "views")
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(express.static("public"))
 
-app.use("/bootstrap", express.static("node_modules/bootstrap/dist"))
-app.use("/toastify", express.static("node_modules/toastify-js/src"))
+const publicPath = path.join(__dirname, "../public")
+const bootstrapPath = path.join(__dirname, "../node_modules/bootstrap/dist")
+const toastifyPath = path.join(__dirname, "../node_modules/toastify-js/src")
+
+app.use(express.static(publicPath))
+app.use("/bootstrap", express.static(bootstrapPath))
+app.use("/toastify", express.static(toastifyPath))
 
 app.use("/auth", authRoutes)
 app.use("/feed", feedRoutes)
