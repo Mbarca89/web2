@@ -112,22 +112,34 @@ block content
               .d-flex.gap-2
                 button.btn.btn-fotaza.rounded-pill.px-4(type="submit") Publicar
                 a.btn.btn-fotaza-outline.rounded-pill.px-4(href="/feed") Cancelar
-script(type="module").
-  import imageCompression from "browser-image-compression"
 
-const options = {
-  maxSizeMB: 0.2,
-  maxWidthOrHeight: 1200,
-  useWebWorker: true,
-}
+  script(type="module").
+    import imageCompression from "https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/+esm"
 
-const compressedFiles = []
+    const form = document.getElementById("createPostForm")
+    const imageInput = document.getElementById("images")
 
-for (const file of files) {
-  const compressed = await imageCompression(
-    file,
-    options
-  )
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault()
 
-  compressedFiles.push(compressed)
-}
+      if (!imageInput.files.length) {
+        form.submit()
+        return
+      }
+
+      const dataTransfer = new DataTransfer()
+
+      for (const file of imageInput.files) {
+        const compressed = await imageCompression(file, {
+          maxSizeMB: 0.15,
+          maxWidthOrHeight: 1000,
+          useWebWorker: true,
+        })
+
+        dataTransfer.items.add(compressed)
+      }
+
+      imageInput.files = dataTransfer.files
+
+      form.submit()
+    })
