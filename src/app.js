@@ -24,7 +24,7 @@ const __dirname = path.dirname(__filename)
 
 app.set("view engine", "pug")
 app.set("views", path.join(__dirname, "views"))
-app.locals.basedir = __dirname
+app.locals.basedir = path.join(__dirname, "views")
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
