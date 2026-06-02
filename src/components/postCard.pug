@@ -1,0 +1,75 @@
+.card.border-0.shadow-sm.rounded-4.overflow-hidden.mb-4
+  if post.images && post.images.length > 1
+    .carousel.slide(id=`postCarousel${post.id}` data-bs-ride="false")
+      .carousel-inner
+        each image, index in post.images
+          .carousel-item(class=index === 0 ? "active" : "")
+            .ratio.ratio-1x1.bg-light
+              img.object-fit-cover.w-100.h-100(
+                src=image.imageData
+                alt=post.title
+              )
+
+      button.carousel-control-prev(
+        type="button"
+        data-bs-target=`#postCarousel${post.id}`
+        data-bs-slide="prev"
+      )
+        span.carousel-control-prev-icon
+
+      button.carousel-control-next(
+        type="button"
+        data-bs-target=`#postCarousel${post.id}`
+        data-bs-slide="next"
+      )
+        span.carousel-control-next-icon
+
+  else
+    .ratio.ratio-1x1.bg-light
+      img.object-fit-cover.w-100.h-100(
+        src=post.images[0].imageData
+        alt=post.title
+      )
+
+  .card-body
+    .d-flex.align-items-center.justify-content-between.mb-2
+      .d-flex.align-items-center.gap-2
+        .rounded-circle.bg-dark.text-white.d-flex.align-items-center.justify-content-center(
+          style="width:36px;height:36px;"
+        )
+          span.fw-bold= post.username[0].toUpperCase()
+
+        div
+          p.fw-bold.mb-0= post.username
+          small.text-muted= post.createdAt
+
+      if post.licenseType === "COPYRIGHT"
+        span.badge.text-bg-warning Copyright
+      else
+        span.badge.text-bg-success Libre
+
+    h5.fw-bold.mb-2= post.title
+
+    if post.description
+      p.text-muted.mb-2= post.description
+
+    if post.tags && post.tags.length
+      .d-flex.flex-wrap.gap-2.mb-3
+        each tag in post.tags
+          span.badge.rounded-pill.text-bg-light.text-primary
+            | ##{tag}
+
+    .d-flex.align-items-center.justify-content-between.border-top.pt-3
+      .d-flex.align-items-center.gap-3
+        span.fw-semibold
+          | ❤️ #{post.likesCount}
+
+        span.text-muted
+          | ⭐ #{post.ratingAvg} / 5
+
+      if post.isForSale
+        span.fw-bold.text-fotaza-gradient
+          | $#{post.price}
+      else
+        span.text-muted
+          | No disponible para venta

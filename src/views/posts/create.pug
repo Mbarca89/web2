@@ -1,0 +1,114 @@
+extends /views/layouts/main
+
+block content
+  main.container.py-5
+    .row.justify-content-center
+      .col-12.col-md-8.col-lg-6
+        .card.border-0.shadow-sm.rounded-4
+          .card-body.p-4.p-md-5
+            h1.h3.fw-bold.mb-4 Crear publicación
+
+            form(action="/posts" method="POST" enctype="multipart/form-data")
+              .mb-3
+                label.form-label(for="title") Título
+                input.form-control(
+                  class=fieldErrors.title ? "is-invalid" : ""
+                  type="text"
+                  id="title"
+                  name="title"
+                  value=oldData.title || ""
+                  placeholder="Ej: Atardecer en la montaña"
+                )
+                if fieldErrors.title
+                  .invalid-feedback= fieldErrors.title
+
+              .mb-3
+                label.form-label(for="description") Descripción
+                textarea.form-control(
+                  id="description"
+                  name="description"
+                  rows="3"
+                  placeholder="Contá algo sobre la foto..."
+                )= oldData.description || ""
+
+              .mb-3
+                label.form-label(for="images") Imágenes
+                input.form-control(
+                  class=fieldErrors.images ? "is-invalid" : ""
+                  type="file"
+                  id="images"
+                  name="images"
+                  accept="image/jpeg,image/png,image/webp"
+                  multiple
+                )
+                if fieldErrors.images
+                  .invalid-feedback= fieldErrors.images
+                small.text-muted Podés subir hasta 5 imágenes.
+
+              .mb-3
+                label.form-label(for="tags") Etiquetas
+                input.form-control(
+                  class=fieldErrors.tags ? "is-invalid" : ""
+                  type="text"
+                  id="tags"
+                  name="tags"
+                  value=oldData.tags || ""
+                  placeholder="paisaje, naturaleza, retrato"
+                )
+                if fieldErrors.tags
+                  .invalid-feedback= fieldErrors.tags
+                small.text-muted Separalas con coma.
+
+              .mb-3
+                label.form-label(for="licenseType") Licencia
+                select.form-select(
+                  class=fieldErrors.licenseType ? "is-invalid" : ""
+                  id="licenseType"
+                  name="licenseType"
+                )
+                  option(value="FREE" selected=oldData.licenseType === "FREE") Sin copyright
+                  option(value="COPYRIGHT" selected=oldData.licenseType === "COPYRIGHT") Con copyright
+                if fieldErrors.licenseType
+                  .invalid-feedback= fieldErrors.licenseType
+
+              .mb-3
+                label.form-label(for="watermarkText") Texto de marca de agua
+                input.form-control(
+                  class=fieldErrors.watermarkText ? "is-invalid" : ""
+                  type="text"
+                  id="watermarkText"
+                  name="watermarkText"
+                  value=oldData.watermarkText || ""
+                  placeholder="Ej: © Fotaza - Mauricio"
+                )
+                if fieldErrors.watermarkText
+                  .invalid-feedback= fieldErrors.watermarkText
+                small.text-muted Obligatorio si la imagen tiene copyright.
+
+              .form-check.mb-3
+                input.form-check-input(
+                  type="checkbox"
+                  id="isForSale"
+                  name="isForSale"
+                  checked=oldData.isForSale === "on"
+                )
+                label.form-check-label(for="isForSale") Disponible para venta
+
+              .mb-4
+                label.form-label(for="price") Precio
+                input.form-control(
+                  class=fieldErrors.price ? "is-invalid" : ""
+                  type="number"
+                  id="price"
+                  name="price"
+                  min="0"
+                  step="0.01"
+                  value=oldData.price || ""
+                  placeholder="Ej: 15000"
+                )
+                if fieldErrors.price
+                  .invalid-feedback= fieldErrors.price
+
+              .d-flex.gap-2
+                button.btn.btn-fotaza.rounded-pill.px-4(type="submit") Publicar
+                a.btn.btn-fotaza-outline.rounded-pill.px-4(href="/feed") Cancelar

@@ -3,11 +3,14 @@ import sequelize from "./config/db/db.js"
 import express from "express"
 import dotenv from "dotenv"
 import authRoutes from "./routes/authRoutes.js"
+import feedRoutes from "./routes/feedRoutes.js"
 import session from "express-session"
 import livereload from "livereload"
 import connectLiveReload from "connect-livereload"
 import cookieParser from "cookie-parser"
 import { loadUser, requireAuth } from "./middlewares/authMiddleware.js"
+import "./models/associations.js"
+import postRoutes from "./routes/postRoutes.js"
 
 
 dotenv.config()
@@ -31,6 +34,7 @@ app.use(connectLiveReload())
 
 app.set("view engine", "pug")
 app.set("views", "./src/views")
+app.locals.basedir = "./src";
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -63,6 +67,9 @@ app.use((req, res, next) => {
 })
 
 app.use("/auth", authRoutes)
+app.use("/feed", feedRoutes)
+app.use("/posts", postRoutes);
+
 app.get("/", (req, res) => {
   res.render("landing", {
     title: "Inicio",

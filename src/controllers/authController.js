@@ -58,41 +58,41 @@ export async function registerUser(req, res) {
 }
 
 export async function loginUser(req, res) {
-  const { username, password } = req.body;
+  const { username, password } = req.body
 
-  const fieldErrors = validateLogin({ username, password });
+  const fieldErrors = validateLogin({ username, password })
 
   if (Object.keys(fieldErrors).length > 0) {
     return res.render("auth/login", {
       title: "Iniciar sesión",
       fieldErrors,
       oldData: { username },
-    });
+    })
   }
 
   try {
-    const { user, token } = await loginUserService({ username, password });
+    const { user, token } = await loginUserService({ username, password })
 
     res.cookie("token", token, {
       httpOnly: true,
       secure: false,
       sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000,
-    });
+    })
 
-    return res.redirect("/");
+    return res.redirect("/feed")
   } catch (error) {
     return res.render("auth/login", {
       title: "Iniciar sesión",
       fieldErrors: {},
       oldData: { username },
       errorMessage: error.message,
-    });
+    })
   }
 }
 
 export function logoutUser(req, res) {
-  res.clearCookie("token");
-  return res.redirect("/auth/login");
+  res.clearCookie("token")
+  return res.redirect("/auth/login")
 }
 
