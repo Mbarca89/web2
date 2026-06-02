@@ -8,7 +8,7 @@ block content
           .card-body.p-4.p-md-5
             h1.h3.fw-bold.mb-4 Crear publicación
 
-            form(action="/posts" method="POST" enctype="multipart/form-data")
+            form(  id="createPostForm" action="/posts" method="POST" enctype="multipart/form-data")
               .mb-3
                 label.form-label(for="title") Título
                 input.form-control(
@@ -112,3 +112,22 @@ block content
               .d-flex.gap-2
                 button.btn.btn-fotaza.rounded-pill.px-4(type="submit") Publicar
                 a.btn.btn-fotaza-outline.rounded-pill.px-4(href="/feed") Cancelar
+script(type="module").
+  import imageCompression from "browser-image-compression"
+
+const options = {
+  maxSizeMB: 0.2,
+  maxWidthOrHeight: 1200,
+  useWebWorker: true,
+}
+
+const compressedFiles = []
+
+for (const file of files) {
+  const compressed = await imageCompression(
+    file,
+    options
+  )
+
+  compressedFiles.push(compressed)
+}

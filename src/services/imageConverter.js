@@ -3,11 +3,11 @@ import sharp from "sharp";
 export async function convertImage(file) {
   const buffer = await sharp(file.buffer)
     .resize({
-      width: 1200,
+      width: 1000,
       withoutEnlargement: true,
     })
     .webp({
-      quality: 75,
+      quality: 60,
     })
     .toBuffer()
 
