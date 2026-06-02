@@ -7,6 +7,9 @@ import feedRoutes from "./routes/feedRoutes.js"
 import postRoutes from "./routes/postRoutes.js"
 import { loadUser } from "./middlewares/authMiddleware.js"
 
+import path from "path"
+import { fileURLToPath } from "url"
+
 import "./models/associations.js"
 
 dotenv.config()
@@ -16,9 +19,12 @@ const app = express()
 app.use(cookieParser())
 app.use(loadUser)
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 app.set("view engine", "pug")
-app.set("views", "./src/views")
-app.locals.basedir = "./src"
+app.set("views", path.join(__dirname, "views"))
+app.locals.basedir = __dirname
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
