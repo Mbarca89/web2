@@ -1,4 +1,5 @@
 import { Sequelize } from "sequelize"
+import pg from "pg"
 import dotenv from "dotenv"
 
 dotenv.config()
@@ -6,19 +7,17 @@ dotenv.config()
 let sequelize
 
 if (process.env.DB === "neon") {
-  sequelize = new Sequelize(
-    process.env.NEON_DATABASE_URL,
-    {
-      dialect: "postgres",
-      dialectOptions: {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false,
-        },
+  sequelize = new Sequelize(process.env.NEON_DATABASE_URL, {
+    dialect: "postgres",
+    dialectModule: pg,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
       },
-      logging: false,
-    }
-  )
+    },
+    logging: false,
+  });
 } else {
   sequelize = new Sequelize(
     process.env.DB_NAME,
@@ -28,9 +27,10 @@ if (process.env.DB === "neon") {
       host: process.env.DB_HOST,
       port: process.env.DB_PORT,
       dialect: "postgres",
+      dialectModule: pg,
       logging: false,
     }
-  )
+  );
 }
 
 export default sequelize
