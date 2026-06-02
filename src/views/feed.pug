@@ -2,6 +2,27 @@ extends layouts/main
 
 block content
   main.container.py-5
+    form.mb-4(action="/feed" method="GET")
+      .row.g-2
+        .col-12.col-md-5
+          input.form-control(
+            type="text"
+            name="q"
+            placeholder="Buscar publicaciones..."
+            value=filters.q || ""
+          )
+
+        .col-12.col-md-3
+          select.form-select(name="license")
+            option(value="") Todas las licencias
+            option(value="FREE" selected=filters.license === "FREE") Sin copyright
+            option(value="COPYRIGHT" selected=filters.license === "COPYRIGHT") Con copyright
+
+        .col-12.col-md-2
+          button.btn.btn-fotaza.w-100(type="submit") Buscar
+
+        .col-12.col-md-2
+          a.btn.btn-fotaza-outline.w-100(href="/feed") Limpiar
     .row.justify-content-center
       .col-12.col-md-8.col-lg-5
         each post in posts

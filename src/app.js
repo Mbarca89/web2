@@ -6,6 +6,7 @@ import authRoutes from "./routes/authRoutes.js"
 import feedRoutes from "./routes/feedRoutes.js"
 import postRoutes from "./routes/postRoutes.js"
 import { loadUser } from "./middlewares/authMiddleware.js"
+import likeRoutes from "./routes/likeRoutes.js"
 
 import path from "path"
 import { fileURLToPath } from "url"
@@ -32,14 +33,17 @@ app.use(express.json())
 const publicPath = path.join(__dirname, "../public")
 const bootstrapPath = path.join(__dirname, "../node_modules/bootstrap/dist")
 const toastifyPath = path.join(__dirname, "../node_modules/toastify-js/src")
+const iconsPath = path.join(__dirname, "../node_modules/bootstrap-icons/font")
 
 app.use(express.static(publicPath))
 app.use("/bootstrap", express.static(bootstrapPath))
 app.use("/toastify", express.static(toastifyPath))
+app.use("/bootstrap-icons", express.static(iconsPath))
 
 app.use("/auth", authRoutes)
 app.use("/feed", feedRoutes)
 app.use("/posts", postRoutes)
+app.use("/likes", likeRoutes);
 
 app.get("/", (req, res) => {
   res.render("landing", {

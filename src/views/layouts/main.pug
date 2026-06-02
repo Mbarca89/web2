@@ -21,14 +21,19 @@ html(lang="es")
       href="/css/global.css"
     )
 
-    block styles
+    link(
+      rel="stylesheet"
+      href="/bootstrap-icons/bootstrap-icons.css"
+    )
+
+  block styles
 
   body.bg-light
 
     include /components/navbar
 
     block content
-    
+
     script(src="/bootstrap/js/bootstrap.bundle.min.js")
     script(src="/toastify/toastify.js")
 

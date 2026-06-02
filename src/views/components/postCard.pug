@@ -61,8 +61,17 @@
 
     .d-flex.align-items-center.justify-content-between.border-top.pt-3
       .d-flex.align-items-center.gap-3
-        span.fw-semibold
-          | ❤️ #{post.likesCount}
+        button.btn.btn-link.p-0.text-decoration-none.like-btn(
+          type="button"
+          data-post-id=post.id
+          disabled=!currentUser
+        )
+          if post.likedByCurrentUser
+            i.bi.bi-heart-fill.text-danger.fs-4
+          else
+            i.bi.bi-heart.fs-4.text-dark
+
+        span.ms-2.like-count.text-muted= post.likesCount
 
         span.text-muted
           | ⭐ #{post.ratingAvg} / 5
@@ -73,3 +82,29 @@
       else
         span.text-muted
           | No disponible para venta
+
+script.
+  document.querySelectorAll(".like-btn").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const postId = button.dataset.postId;
+
+      const response = await fetch(`/likes/${postId}/toggle`, {
+        method: "POST",
+      });
+
+      const data = await response.json();
+
+      if (!data.success) return;
+
+      const icon = button.querySelector("i");
+      const count = button.parentElement.querySelector(".like-count");
+
+      count.textContent = data.likesCount;
+
+      if (data.liked) {
+        icon.className = "bi bi-heart-fill text-danger fs-4";
+      } else {
+        icon.className = "bi bi-heart text-dark fs-4";
+      }
+    });
+  });

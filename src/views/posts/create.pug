@@ -110,7 +110,12 @@ block content
                   .invalid-feedback= fieldErrors.price
 
               .d-flex.gap-2
-                button.btn.btn-fotaza.rounded-pill.px-4(type="submit") Publicar
+                button#submitPostBtn.btn.btn-fotaza.rounded-pill.px-4(type="submit")
+                  span#submitText Publicar
+                  span#submitSpinner.spinner-border.spinner-border-sm.ms-2.d-none(
+                    role="status"
+                    aria-hidden="true"
+                  )
                 a.btn.btn-fotaza-outline.rounded-pill.px-4(href="/feed") Cancelar
 
   script(type="module").
@@ -118,28 +123,58 @@ block content
 
     const form = document.getElementById("createPostForm")
     const imageInput = document.getElementById("images")
+    const submitBtn = document.getElementById("submitPostBtn")
+    const submitText = document.getElementById("submitText")
+    const submitSpinner = document.getElementById("submitSpinner")
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault()
 
-      if (!imageInput.files.length) {
+      submitBtn.disabled = true
+      submitText.textContent = "Publicando..."
+      submitSpinner.classList.remove("d-none")
+
+      try {
+        if (!imageInput.files.length) {
+          form.submit()
+          return
+        }
+
+        const dataTransfer = new DataTransfer()
+
+        for (const file of imageInput.files) {
+          const compressedBlob = await imageCompression(file, {
+            maxSizeMB: 0.15,
+            maxWidthOrHeight: 1000,
+            useWebWorker: true,
+            fileType: "image/webp",
+          })
+
+          const compressedFile = new File(
+            [compressedBlob],
+            file.name.replace(/\.[^/.]+$/, ".webp"),
+            { type: "image/webp" }
+          )
+
+          dataTransfer.items.add(compressedFile)
+        }
+
+        imageInput.files = dataTransfer.files
+
         form.submit()
-        return
+      } catch (error) {
+        console.error(error)
+
+        submitBtn.disabled = false
+        submitText.textContent = "Publicar"
+        submitSpinner.classList.add("d-none")
+
+        Toastify({
+          text: "No se pudieron optimizar las imágenes",
+          duration: 4000,
+          gravity: "top",
+          position: "right",
+          style: { background: "#dc3545" }
+        }).showToast()
       }
-
-      const dataTransfer = new DataTransfer()
-
-      for (const file of imageInput.files) {
-        const compressed = await imageCompression(file, {
-          maxSizeMB: 0.15,
-          maxWidthOrHeight: 1000,
-          useWebWorker: true,
-        })
-
-        dataTransfer.items.add(compressed)
-      }
-
-      imageInput.files = dataTransfer.files
-
-      form.submit()
     })

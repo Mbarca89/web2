@@ -2,15 +2,42 @@ import Post from "../models/Post.js"
 import PostImage from "../models/PostImage.js"
 import User from "../models/User.js"
 import Tag from "../models/Tag.js"
+import { Op } from "sequelize"
+import PostLike from "../models/PostLike.js"
 
-export async function getFeedPosts(currentUser) {
-  const imageWhere = currentUser
-    ? {}
-    : { licenseType: "FREE" }
+export async function getFeedPosts(currentUser, filters = {}) {
+
+  const { q, license } = filters
+
+  const postWhere = {
+    isActive: true,
+  }
+
+  const imageWhere = {}
+
+  if (!currentUser) {
+    imageWhere.licenseType = "FREE"
+  }
+
+  if (license) {
+    imageWhere.licenseType = license
+  }
+
+  const searchWhere = q?.trim()
+    ? {
+      [Op.or]: [
+        { title: { [Op.iLike]: `%${q}%` } },
+        { description: { [Op.iLike]: `%${q}%` } },
+        { "$User.username$": { [Op.iLike]: `%${q}%` } },
+        { "$Tags.name$": { [Op.iLike]: `%${q}%` } },
+      ],
+    }
+    : {}
 
   const posts = await Post.findAll({
     where: {
-      isActive: true,
+      ...postWhere,
+      ...searchWhere,
     },
     include: [
       {
@@ -25,6 +52,11 @@ export async function getFeedPosts(currentUser) {
       {
         model: Tag,
         through: { attributes: [] },
+      },
+      {
+        model: PostLike,
+        attributes: ["id", "userId"],
+        required: false,
       },
     ],
     order: [["createdAt", "DESC"]],
@@ -43,7 +75,10 @@ export async function getFeedPosts(currentUser) {
     isForSale: post.PostImages[0]?.isForSale,
     price: post.PostImages[0]?.price,
     tags: post.Tags.map((tag) => tag.name),
-    likesCount: 0,
+    likesCount: post.PostLikes?.length || 0,
+    likedByCurrentUser: currentUser
+      ? post.PostLikes?.some((like) => like.userId === currentUser.id)
+      : false,
     ratingAvg: 0,
   }))
 }
