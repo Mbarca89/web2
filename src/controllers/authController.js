@@ -13,9 +13,10 @@ export function showRegisterForm(req, res) {
 
 export function showLoginForm(req, res) {
   return res.render("auth/login", {
-    title: "Iniciar Sesion",
+    title: "Iniciar sesión",
     fieldErrors: {},
     oldData: {},
+    successMessage: req.query.success,
   })
 }
 
@@ -44,9 +45,8 @@ export async function registerUser(req, res) {
       password,
     })
 
-    req.session.successMessage = "Usuario registrado correctamente"
+    return res.redirect("/auth/login?success=Usuario registrado correctamente")
 
-    return res.redirect("/auth/login")
   } catch (error) {
     return res.render("auth/register", {
       title: "Registro",
