@@ -1,25 +1,37 @@
-import fs from "fs"
-import path from "path"
-import { fileURLToPath } from "url"
-import { Client } from "pg"
-import dotenv from "dotenv"
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { Client } from "pg";
+import dotenv from "dotenv";
 
 dotenv.config()
 
 async function initDatabase() {
-  const client = new Client({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    database: process.env.DB_NAME,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-  })
+  let client
+
+  if (process.env.DB === "neon") {
+    client = new Client({
+      connectionString: process.env.NEON_DATABASE_URL,
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    })
+  } else {
+    client = new Client({
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      database: process.env.DB_NAME,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+    });
+  }
 
   const __filename = fileURLToPath(import.meta.url)
   const __dirname = path.dirname(__filename)
 
   try {
-    await client.connect();
+    await client.connect()
 
     const sqlPath = path.join(__dirname, "db.sql")
     const sql = fs.readFileSync(sqlPath, "utf8")
