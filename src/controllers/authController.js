@@ -80,6 +80,8 @@ export async function loginUser(req, res) {
       maxAge: 24 * 60 * 60 * 1000,
     })
 
+//probando
+
     return res.redirect("/feed")
   } catch (error) {
     return res.render("auth/login", {
