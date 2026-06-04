@@ -5,6 +5,7 @@ import Tag from "../models/Tag.js"
 import { Op } from "sequelize"
 import PostLike from "../models/PostLike.js"
 import PostRating from "../models/PostRating.js"
+import PostComment from "../models/PostComment.js"
 
 export async function getFeedPosts(currentUser, filters = {}) {
 
@@ -62,6 +63,12 @@ export async function getFeedPosts(currentUser, filters = {}) {
       {
         model: PostRating,
         required: false,
+      },
+      {
+        model: PostComment,
+        include: [{ model: User, attributes: ["username"] }],
+        order: [["createdAt", "DESC"]],
+        required: false,
       }
     ],
     order: [["createdAt", "DESC"]],
@@ -110,6 +117,11 @@ export async function getFeedPosts(currentUser, filters = {}) {
       ratingAvg: parseFloat(ratingAvg),
       ratingsCount: ratingsCount,
       ratedByCurrentUser: ratedByCurrentUser,
+      comments: post.PostComments?.slice(-10).map((comment) => ({
+        id: comment.id,
+        content: comment.content,
+        username: comment.User.username,
+      })) || [],
     }
   })
 }

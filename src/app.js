@@ -8,6 +8,7 @@ import postRoutes from "./routes/postRoutes.js"
 import { loadUser } from "./middlewares/authMiddleware.js"
 import likeRoutes from "./routes/likeRoutes.js"
 import ratingRoutes from "./routes/ratingRoutes.js"
+import commentRoutes from "./routes/commentRoutes.js"
 
 import path from "path"
 import { fileURLToPath } from "url"
@@ -46,6 +47,7 @@ app.use("/feed", feedRoutes)
 app.use("/posts", postRoutes)
 app.use("/likes", likeRoutes)
 app.use("/ratings", ratingRoutes)
+app.use("/comments", commentRoutes)
 
 app.get("/", (req, res) => {
   res.render("landing", {

@@ -54,3 +54,9 @@ body {
 .btn-fotaza-outline:hover {
   background: white !important;
 }
+
+.comments-list {
+  max-height: 200px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}

@@ -70,3 +70,59 @@ if (ratingModal && ratingPostId && submitRatingBtn) {
     }, 700)
   });
 }
+
+document.querySelectorAll(".comment-form").forEach((form) => {
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const postId = form.dataset.postId;
+    const input = form.querySelector("input[name='content']");
+    const content = input.value.trim();
+
+    if (!content) {
+      showToast({
+        message: "El comentario no puede estar vacío",
+        type: "error",
+      });
+      return;
+    }
+
+    const response = await fetch(`/comments/${postId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ content }),
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+      showToast({
+        message: data.message || "No se pudo crear el comentario",
+        type: "error",
+      });
+      return;
+    }
+
+    const commentsList = form
+      .closest(".comments-section")
+      .querySelector(".comments-list");
+
+    const commentElement = document.createElement("div");
+    commentElement.className = "mb-2";
+    commentElement.innerHTML = `
+      <strong>${data.comment.username}</strong>
+      <span class="ms-2 text-muted">${data.comment.content}</span>
+    `;
+
+    commentsList.appendChild(commentElement);
+
+    input.value = "";
+
+    showToast({
+      message: "Comentario agregado",
+      type: "success",
+    });
+  });
+});
