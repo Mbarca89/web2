@@ -59,7 +59,7 @@
           span.badge.rounded-pill.text-bg-light.text-primary
             | ##{tag}
 
-    .d-flex.align-items-center.justify-content-between.border-top.pt-3
+    .d-flex.align-items-center.justify-content-between.border-top.pt-3.post-actions
       .d-flex.align-items-center.gap-3
         button.btn.btn-link.p-0.text-decoration-none.like-btn(
           type="button"
@@ -73,8 +73,23 @@
 
         span.ms-2.like-count.text-muted= post.likesCount
 
-        span.text-muted
-          | ⭐ #{post.ratingAvg} / 5
+        .d-flex.align-items-center.gap-2
+          i.bi.bi-star-fill.text-warning
+          span.fw-semibold= post.ratingAvg
+
+          small.text-muted
+            | (#{post.ratingsCount} valoraciones)
+
+        if currentUser && currentUser.id !== post.userId && !post.ratedByCurrentUser
+          button.btn.btn-sm.btn-fotaza-outline.rounded-pill.rate-btn(
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#ratingModal"
+            data-post-id=post.id
+          )
+            | Valorar
+        else if currentUser && post.ratedByCurrentUser
+          small.text-muted Ya valoraste
 
       if post.isForSale
         span.fw-bold.text-fotaza-gradient
@@ -82,29 +97,3 @@
       else
         span.text-muted
           | No disponible para venta
-
-script.
-  document.querySelectorAll(".like-btn").forEach((button) => {
-    button.addEventListener("click", async () => {
-      const postId = button.dataset.postId;
-
-      const response = await fetch(`/likes/${postId}/toggle`, {
-        method: "POST",
-      });
-
-      const data = await response.json();
-
-      if (!data.success) return;
-
-      const icon = button.querySelector("i");
-      const count = button.parentElement.querySelector(".like-count");
-
-      count.textContent = data.likesCount;
-
-      if (data.liked) {
-        icon.className = "bi bi-heart-fill text-danger fs-4";
-      } else {
-        icon.className = "bi bi-heart text-dark fs-4";
-      }
-    });
-  });

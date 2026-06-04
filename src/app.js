@@ -7,6 +7,7 @@ import feedRoutes from "./routes/feedRoutes.js"
 import postRoutes from "./routes/postRoutes.js"
 import { loadUser } from "./middlewares/authMiddleware.js"
 import likeRoutes from "./routes/likeRoutes.js"
+import ratingRoutes from "./routes/ratingRoutes.js"
 
 import path from "path"
 import { fileURLToPath } from "url"
@@ -43,7 +44,8 @@ app.use("/bootstrap-icons", express.static(iconsPath))
 app.use("/auth", authRoutes)
 app.use("/feed", feedRoutes)
 app.use("/posts", postRoutes)
-app.use("/likes", likeRoutes);
+app.use("/likes", likeRoutes)
+app.use("/ratings", ratingRoutes)
 
 app.get("/", (req, res) => {
   res.render("landing", {

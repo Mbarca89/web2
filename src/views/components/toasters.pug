@@ -1,19 +1,14 @@
 if errorMessage
   script.
-    Toastify({
-      text: !{JSON.stringify(errorMessage)},
-      duration: 4000,
-      gravity: "top",
-      position: "right",
-      style: { background: "#dc3545" }
-    }).showToast();
+    showToast({
+      message: !{JSON.stringify(errorMessage)},
+      type: "error",
+      duration: 4000
+    })
 
 if successMessage
   script.
-    Toastify({
-      text: !{JSON.stringify(successMessage)},
-      duration: 3000,
-      gravity: "top",
-      position: "right",
-      style: { background: "#198754" }
-    }).showToast();
+    showToast({
+      message: !{JSON.stringify(successMessage)},
+      type: "success"
+    })
