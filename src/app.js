@@ -9,6 +9,8 @@ import { loadUser } from "./middlewares/authMiddleware.js"
 import likeRoutes from "./routes/likeRoutes.js"
 import ratingRoutes from "./routes/ratingRoutes.js"
 import commentRoutes from "./routes/commentRoutes.js"
+import userRoutes from "./routes/userRoutes.js"
+import followerRoutes from "./routes/followerRoutes.js"
 
 import path from "path"
 import { fileURLToPath } from "url"
@@ -48,6 +50,8 @@ app.use("/posts", postRoutes)
 app.use("/likes", likeRoutes)
 app.use("/ratings", ratingRoutes)
 app.use("/comments", commentRoutes)
+app.use("/users", userRoutes)
+app.use("/followers", followerRoutes)
 
 app.get("/", (req, res) => {
   res.render("landing", {

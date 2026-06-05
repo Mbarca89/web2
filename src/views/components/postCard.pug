@@ -40,7 +40,7 @@
           span.fw-bold= post.username[0].toUpperCase()
 
         div
-          p.fw-bold.mb-0= post.username
+          a.fw-bold.mb-0.text-decoration-none.text-dark(href=`/users/${post.userId}`)= post.username
           small.text-muted= post.createdAt
 
       if post.licenseType === "COPYRIGHT"

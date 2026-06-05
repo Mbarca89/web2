@@ -6,6 +6,7 @@ import PostTag from "./PostTag.js"
 import PostLike from "./PostLike.js"
 import PostRating from "./PostRating.js"
 import PostComment from "./PostComment.js"
+import Follower from "./Follower.js"
 
 User.hasMany(Post, {
   foreignKey: "user_id",
@@ -80,5 +81,26 @@ User.hasMany(PostComment, {
 })
 
 PostComment.belongsTo(User, { 
-  foreignKey: "user_id" })
+  foreignKey: "user_id" 
+})
+
+User.hasMany(Follower, {
+  foreignKey: "follower_id",
+  as: "FollowingRelations",
+})
+
+User.hasMany(Follower, {
+  foreignKey: "following_id",
+  as: "FollowerRelations",
+})
+
+Follower.belongsTo(User, {
+  foreignKey: "follower_id",
+  as: "FollowerUser",
+})
+
+Follower.belongsTo(User, {
+  foreignKey: "following_id",
+  as: "FollowingUser",
+})
 

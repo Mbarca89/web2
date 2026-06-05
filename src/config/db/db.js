@@ -8,6 +8,7 @@ let sequelize
 
 if (process.env.DB === "neon") {
   sequelize = new Sequelize(process.env.NEON_DATABASE_URL, {
+    logging: console.log,
     dialect: "postgres",
     dialectModule: pg,
     dialectOptions: {
@@ -16,7 +17,6 @@ if (process.env.DB === "neon") {
         rejectUnauthorized: false,
       },
     },
-    logging: false,
   });
 } else {
   sequelize = new Sequelize(

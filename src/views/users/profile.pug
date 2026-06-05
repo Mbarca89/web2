@@ -1,0 +1,77 @@
+extends /layouts/main
+
+block content
+  main.container.py-5
+    .card.border-0.shadow-sm.rounded-4.mb-4
+      .card-body.p-4
+        .d-flex.flex-column.flex-md-row.align-items-md-center.justify-content-between.gap-3
+          .d-flex.align-items-center.gap-3
+            .rounded-circle.bg-dark.text-white.d-flex.align-items-center.justify-content-center(
+              style="width:72px;height:72px;"
+            )
+              span.fs-3.fw-bold= profile.user.username[0].toUpperCase()
+
+            div
+              h1.h3.fw-bold.mb-1= profile.user.username
+              p.text-muted.mb-0= profile.user.email
+
+          if currentUser && !profile.isOwnProfile
+            button#followBtn.btn.rounded-pill.px-4(
+              class=profile.isFollowing ? "btn-fotaza-outline" : "btn-fotaza"
+              type="button"
+              data-user-id=profile.user.id
+            )
+              if profile.isFollowing
+                | Dejar de seguir
+              else
+                | Seguir
+
+        .d-flex.gap-4.mt-4
+          div
+            strong#followersCount= profile.followersCount
+            span.text-muted.ms-1 seguidores
+
+          div
+            strong= profile.followingCount
+            span.text-muted.ms-1 seguidos
+
+          div
+            strong= profile.posts.length
+            span.text-muted.ms-1 publicaciones
+
+    h2.h4.fw-bold.mb-3 Publicaciones
+
+    if profile.posts.length
+      .row.g-4
+        each post in profile.posts
+          .col-12.col-md-6.col-lg-4
+            .card.border-0.shadow-sm.rounded-4.overflow-hidden.h-100
+              if post.images && post.images.length
+                .ratio.ratio-1x1.bg-light
+                  img.object-fit-cover.w-100.h-100(
+                    src=post.images[0].imageData
+                    alt=post.title
+                  )
+
+              .card-body
+                h5.fw-bold.mb-2= post.title
+
+                if post.description
+                  p.text-muted.small.mb-2= post.description
+
+                if post.tags && post.tags.length
+                  .d-flex.flex-wrap.gap-1.mb-2
+                    each tag in post.tags
+                      span.badge.rounded-pill.text-bg-light.text-primary
+                        | ##{tag}
+
+                if post.isForSale
+                  span.fw-bold.text-fotaza-gradient $#{post.price}
+                else
+                  span.text-muted.small No disponible para venta
+    else
+      .card.border-0.shadow-sm.rounded-4
+        .card-body.text-center.p-5
+          p.text-muted.mb-0 Este usuario todavía no tiene publicaciones.
+
+  script(src="/js/profileInteractions.js")
