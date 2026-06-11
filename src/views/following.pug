@@ -1,0 +1,19 @@
+extends /layouts/main
+
+block content
+  main.container.py-5
+    .row.justify-content-center
+      .col-12.col-md-8.col-lg-5
+
+        if posts.length
+          each post in posts
+            include /components/postCard
+        else
+          .card.border-0.shadow-sm.rounded-4
+            .card-body.text-center.p-5
+              p.text-muted.mb-3 Todavía no seguis a nadie o no hay publicaciones.
+              a.btn.btn-fotaza.rounded-pill.px-4(href="/feed") Explorar publicaciones
+
+    include /components/ratingModal
+
+    script(src="/js/feedInteractions.js")

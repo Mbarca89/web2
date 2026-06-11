@@ -95,3 +95,13 @@ CREATE TABLE IF NOT EXISTS followers (
   UNIQUE(follower_id, following_id),
   CHECK (follower_id <> following_id)
 );  
+
+CREATE TABLE IF NOT EXISTS post_reports (
+  id SERIAL PRIMARY KEY,
+  post_id INTEGER NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+  reporter_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  reason VARCHAR(80) NOT NULL,
+  description TEXT,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(post_id, reporter_id)
+);

@@ -27,26 +27,4 @@ block content
       .col-12.col-md-8.col-lg-5
         each post in posts
           include /components/postCard
-    .modal.fade#ratingModal(tabindex="-1" aria-hidden="true")
-      .modal-dialog.modal-dialog-centered
-        .modal-content.rounded-4.border-0
-          .modal-header
-            h5.modal-title Valorar publicación
-            button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Cerrar")
-
-          .modal-body
-            p.text-muted.mb-3 Elegí una valoración del 1 al 5.
-            input#ratingPostId(type="hidden")
-
-            select#ratingValue.form-select
-              option(value="1") 1 estrella
-              option(value="2") 2 estrellas
-              option(value="3") 3 estrellas
-              option(value="4") 4 estrellas
-              option(value="5" selected) 5 estrellas
-
-          .modal-footer
-            button.btn.btn-fotaza-outline.rounded-pill(type="button" data-bs-dismiss="modal") Cancelar
-            button#submitRatingBtn.btn.btn-fotaza.rounded-pill(type="button") Guardar valoración
-
     script(src="/js/feedInteractions.js")
