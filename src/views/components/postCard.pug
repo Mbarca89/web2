@@ -80,7 +80,14 @@
           small.text-muted
             | (#{post.ratingsCount} valoraciones)
 
-        if currentUser && currentUser.id !== post.userId && !post.ratedByCurrentUser
+      if post.isForSale
+        span.fw-bold.text-fotaza-gradient
+          | $#{post.price}
+      else
+        span.text-muted
+          | No disponible para venta
+    .mt-3.border-top.pt-3.d-flex.flex-row.gap-3
+      if currentUser && currentUser.id !== post.userId && !post.ratedByCurrentUser
           button.btn.btn-sm.btn-fotaza-outline.rounded-pill.rate-btn(
             type="button"
             data-bs-toggle="modal"
@@ -88,15 +95,17 @@
             data-post-id=post.id
           )
             | Valorar
-        else if currentUser && post.ratedByCurrentUser
+      else if currentUser && post.ratedByCurrentUser
           small.text-muted Ya valoraste
-
-      if post.isForSale
-        span.fw-bold.text-fotaza-gradient
-          | $#{post.price}
-      else
-        span.text-muted
-          | No disponible para venta
+      if currentUser && currentUser.id !== post.userId
+        button.btn.btn-sm.btn-outline-danger.rounded-pill.report-btn(
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#reportModal"
+          data-post-id=post.id
+        )
+          i.me-1
+          | Denunciar
     .mt-3.border-top.pt-3.comments-section
       .comments-list.border.rounded-3.p-2.mb-3
         each comment in post.comments

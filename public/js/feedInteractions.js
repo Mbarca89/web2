@@ -1,3 +1,4 @@
+//LIKE
 document.querySelectorAll(".like-btn").forEach((button) => {
   button.addEventListener("click", async () => {
     const postId = button.dataset.postId
@@ -28,6 +29,7 @@ document.querySelectorAll(".like-btn").forEach((button) => {
   })
 })
 
+//RATING
 const ratingModal = document.getElementById("ratingModal")
 const ratingPostId = document.getElementById("ratingPostId")
 const submitRatingBtn = document.getElementById("submitRatingBtn")
@@ -71,6 +73,7 @@ if (ratingModal && ratingPostId && submitRatingBtn) {
   });
 }
 
+//COMMENTS
 document.querySelectorAll(".comment-form").forEach((form) => {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -126,3 +129,49 @@ document.querySelectorAll(".comment-form").forEach((form) => {
     });
   });
 });
+
+//REPORT
+const reportModal = document.getElementById("reportModal")
+const reportPostId = document.getElementById("reportPostId")
+const submitReportBtn = document.getElementById("submitReportBtn")
+
+if (reportModal && reportPostId && submitReportBtn) {
+  reportModal.addEventListener("show.bs.modal", (event) => {
+    const button = event.relatedTarget
+    reportPostId.value = button.dataset.postId
+  })
+
+  submitReportBtn.addEventListener("click", async () => {
+    const postId = reportPostId.value
+    const reason = document.getElementById("reportReason").value
+    const description = document.getElementById("reportDescription").value
+
+    const response = await fetch(`/reports/${postId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ reason, description }),
+    })
+
+    const data = await response.json();
+
+    if (!data.success) {
+      showToast({
+        message: data.message || "No se pudo registrar la denuncia",
+        type: "error",
+      })
+      return
+    }
+
+    showToast({
+      message: "Denuncia registrada correctamente",
+      type: "success",
+    });
+
+    const modalInstance = bootstrap.Modal.getInstance(reportModal)
+    modalInstance.hide()
+
+    document.getElementById("reportDescription").value = ""
+  })
+}

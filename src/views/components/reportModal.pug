@@ -1,0 +1,25 @@
+.modal.fade#reportModal(tabindex="-1" aria-hidden="true")
+  .modal-dialog.modal-dialog-centered
+    .modal-content.rounded-4.border-0
+      .modal-header
+        h5.modal-title Denunciar publicacion
+        button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Cerrar")
+
+      .modal-body
+        input#reportPostId(type="hidden")
+
+        .mb-3
+          label.form-label Motivo
+          select#reportReason.form-select
+            option(value="Contenido inapropiado") Contenido inapropiado
+            option(value="Spam") Spam
+            option(value="Copyright") Copyright
+            option(value="Otro") Otro
+
+        .mb-3
+          label.form-label Descripcio
+          textarea#reportDescription.form-control(rows="3" placeholder="Explica brevemente el motivo...")
+
+      .modal-footer
+        button.btn.btn-fotaza-outline.rounded-pill(type="button" data-bs-dismiss="modal") Cancelar
+        button#submitReportBtn.btn.btn-danger.rounded-pill(type="button") Enviar denuncia

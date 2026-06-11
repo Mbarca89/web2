@@ -12,6 +12,8 @@ import commentRoutes from "./routes/commentRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
 import followerRoutes from "./routes/followerRoutes.js"
 import followingRoutes from "./routes/followingRoutes.js"
+import reportRoutes from "./routes/reportRoutes.js"
+import meRoutes from "./routes/meRoutes.js"
 
 import path from "path"
 import { fileURLToPath } from "url"
@@ -54,6 +56,8 @@ app.use("/comments", commentRoutes)
 app.use("/users", userRoutes)
 app.use("/followers", followerRoutes)
 app.use("/following", followingRoutes)
+app.use("/reports", reportRoutes)
+app.use("/me", meRoutes)
 
 app.get("/", (req, res) => {
   res.render("landing", {
