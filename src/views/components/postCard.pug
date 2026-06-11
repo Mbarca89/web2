@@ -86,18 +86,18 @@
       else
         span.text-muted
           | No disponible para venta
-    .mt-3.border-top.pt-3.d-flex.flex-row.gap-3
-      if currentUser && currentUser.id !== post.userId && !post.ratedByCurrentUser
-          button.btn.btn-sm.btn-fotaza-outline.rounded-pill.rate-btn(
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#ratingModal"
-            data-post-id=post.id
-          )
-            | Valorar
-      else if currentUser && post.ratedByCurrentUser
-          small.text-muted Ya valoraste
-      if currentUser && currentUser.id !== post.userId
+    if currentUser && currentUser.id !== post.userId
+      .mt-3.border-top.pt-3.d-flex.flex-row.gap-3
+        if !post.ratedByCurrentUser
+            button.btn.btn-sm.btn-fotaza-outline.rounded-pill.rate-btn(
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#ratingModal"
+              data-post-id=post.id
+            )
+              | Valorar
+        else if currentUser && post.ratedByCurrentUser
+            small.text-muted Ya valoraste
         button.btn.btn-sm.btn-outline-danger.rounded-pill.report-btn(
           type="button"
           data-bs-toggle="modal"
@@ -106,15 +106,16 @@
         )
           i.me-1
           | Denunciar
-    .mt-3.border-top.pt-3.comments-section
-      .comments-list.border.rounded-3.p-2.mb-3
-        each comment in post.comments
-          .mb-2
-            strong= comment.username
-            span.ms-2.text-muted= comment.content
+      if post.comments && post.comments.length     
+        .mt-3.border-top.pt-3.comments-section
+          .comments-list.border.rounded-3.p-2.mb-3
+            each comment in post.comments
+              .mb-2
+                strong= comment.username
+                span.ms-2.text-muted= comment.content
 
       if currentUser
-        form.comment-form.mt-3(data-post-id=post.id)
+         form.comment-form.mt-3(data-post-id=post.id)
           .input-group
             input.form-control(
               type="text"

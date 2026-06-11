@@ -8,7 +8,7 @@ let sequelize
 
 if (process.env.DB === "neon") {
   sequelize = new Sequelize(process.env.NEON_DATABASE_URL, {
-    logging: console.log,
+    logging: false,
     dialect: "postgres",
     dialectModule: pg,
     dialectOptions: {
