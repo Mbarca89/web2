@@ -1,4 +1,4 @@
-.card.border-0.shadow-sm.rounded-4.overflow-hidden.mb-4
+.card.post-card.border-0.shadow-sm.rounded-4.overflow-hidden.mb-4
   if post.images && post.images.length > 1
     .carousel.slide(id=`postCarousel${post.id}` data-bs-ride="false")
       .carousel-inner
@@ -106,20 +106,20 @@
         )
           i.me-1
           | Denunciar
-      if post.comments && post.comments.length     
-        .mt-3.border-top.pt-3.comments-section
-          .comments-list.border.rounded-3.p-2.mb-3
-            each comment in post.comments
-              .mb-2
-                strong= comment.username
-                span.ms-2.text-muted= comment.content
+    if post.comments && post.comments.length     
+      .mt-3.border-top.pt-3.comments-section
+        .comments-list.border.rounded-3.p-2.mb-3
+          each comment in post.comments
+            .mb-2
+              strong= comment.username
+              span.ms-2.text-muted= comment.content
 
-      if currentUser
-         form.comment-form.mt-3(data-post-id=post.id)
-          .input-group
-            input.form-control(
-              type="text"
-              name="content"
-              placeholder="Escribí un comentario..."
-            )
-            button.btn.btn-fotaza(type="submit") Comentar
+    if currentUser
+       form.comment-form.mt-3(data-post-id=post.id)
+        .input-group
+          input.form-control(
+            type="text"
+            name="content"
+            placeholder="Escribí un comentario..."
+          )
+          button.btn.btn-fotaza(type="submit") Comentar

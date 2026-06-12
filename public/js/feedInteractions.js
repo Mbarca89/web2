@@ -108,9 +108,23 @@ document.querySelectorAll(".comment-form").forEach((form) => {
       return;
     }
 
-    const commentsList = form
-      .closest(".comments-section")
-      .querySelector(".comments-list");
+    const postCard = form.closest(".post-card");
+
+    let commentsSection = postCard.querySelector(".comments-section");
+
+    if (!commentsSection) {
+      commentsSection = document.createElement("div");
+      commentsSection.className = "mt-3 border-top pt-3 comments-section";
+
+      const commentsList = document.createElement("div");
+      commentsList.className = "comments-list border rounded-3 p-2 mb-3";
+
+      commentsSection.appendChild(commentsList);
+
+      form.parentNode.insertBefore(commentsSection, form);
+    }
+
+    const commentsList = commentsSection.querySelector(".comments-list");
 
     const commentElement = document.createElement("div");
     commentElement.className = "mb-2";
