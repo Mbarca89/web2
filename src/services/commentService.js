@@ -20,6 +20,10 @@ export async function createCommentService({ postId, userId, content }) {
 
   const post = await Post.findByPk(postId)
 
+  if (!post.commentsEnabled) {
+    throw new Error("Los comentarios están deshabilitados")
+  }
+
   if (post) {
     await createNotification({
       userId: post.user_id,

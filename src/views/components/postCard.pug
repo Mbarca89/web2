@@ -120,6 +120,10 @@
           input.form-control(
             type="text"
             name="content"
-            placeholder="Escribí un comentario..."
+            placeholder=post.commentsEnabled ? "Escribí un comentario..." : "Comentarios deshabilitados"
+            disabled=!post.commentsEnabled
           )
-          button.btn.btn-fotaza(type="submit") Comentar
+          button.btn.btn-fotaza(
+            type="submit"
+            disabled=!post.commentsEnabled
+          ) Comentar

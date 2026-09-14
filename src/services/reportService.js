@@ -1,5 +1,6 @@
 import Post from "../models/Post.js"
 import PostReport from "../models/PostReport.js"
+import { createNotification } from "./notificationService.js"
 
 export async function createReport({ postId, reporterId, reason, description }) {
   if (!reason?.trim()) {

@@ -38,7 +38,7 @@ block content
       .col-12.col-lg-8
         .d-flex.justify-content-between.align-items-center.mb-3
           h2.h4.fw-bold.mb-0 Administrar publicaciones
-          a.btn.btn-fotaza.rounded-pill.px-4(href="/posts/create") Nueva publicación
+          a.btn.btn-fotaza.px-4(href="/posts/create") Nueva publicación
 
         if dashboard.posts.length
           each post in dashboard.posts
@@ -66,8 +66,35 @@ block content
                     if post.description
                       p.text-muted.small.mt-2.mb-2= post.description
 
+                    .d-flex.gap-2.mt-3
+                      if post.reportsCount > 0
+                        button.btn.btn-sm.btn-outline-secondary(
+                         type="button"
+                         disabled
+                        )
+                          i.bi.bi-lock.me-1
+                          | Edición bloqueada
+                      else 
+                        a.btn.btn-fotaza(
+                         href=`/posts/${post.id}/edit`
+                        )
+                          i.bi.bi-pencil.me-1
+                          | Editar
+                      
+                      button.btn.btn-fotaza.toggle-comments-btn(
+                        type="button"
+                        data-post-id=post.id
+                        data-enabled=post.commentsEnabled
+                      )
+                        if post.commentsEnabled
+                          i.bi.bi-chat-left-text.me-1
+                          span Deshabilitar comentarios
+                        else
+                          i.bi.bi-chat-left-text.me-1
+                          span Habilitar comentarios 
+
                     if post.reportsCount > 0
-                      .alert.alert-warning.rounded-3.py-2.px-3.mb-0
+                      .alert.alert-warning.rounded-3.py-2.px-3.mb-0.mt-3
                         each report in post.reports
                           .mb-2
                             strong= report.reason
@@ -80,3 +107,5 @@ block content
             .card-body.text-center.p-5
               p.text-muted.mb-3 Todavía no creaste publicaciones.
               a.btn.btn-fotaza.rounded-pill.px-4(href="/posts/create") Crear publicación
+
+  script(src="/js/dashboard.js")

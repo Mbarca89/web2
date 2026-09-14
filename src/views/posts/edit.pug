@@ -1,0 +1,64 @@
+extends /layouts/main
+
+block content
+  main.container.py-5
+    .row.justify-content-center
+      .col-12.col-lg-8
+        .card.border-0.shadow-sm.rounded-4
+          .card-body.p-4.p-md-5
+
+            h1.h3.fw-bold.mb-4 Editar publicación
+
+            form(
+              action=`/posts/${post.id}/edit`
+              method="POST"
+            )
+
+              .mb-3
+                label.form-label.fw-semibold(for="title")
+                  | Título
+
+                input.form-control(
+                  id="title"
+                  name="title"
+                  type="text"
+                  maxlength="120"
+                  required
+                  value=post.title
+                )
+
+              .mb-3
+                label.form-label.fw-semibold(for="description")
+                  | Descripción
+
+                textarea.form-control(
+                  id="description"
+                  name="description"
+                  rows="4"
+                )= post.description
+
+              .mb-4
+                label.form-label.fw-semibold(for="tags")
+                  | Etiquetas
+
+                input.form-control(
+                  id="tags"
+                  name="tags"
+                  type="text"
+                  value=post.tags
+                  placeholder="paisaje, naturaleza, viaje"
+                )
+
+                small.text-muted
+                  | Separá las etiquetas con comas.
+
+              .d-flex.gap-2
+                button.btn.btn-fotaza.rounded-pill.px-4(
+                  type="submit"
+                )
+                  | Guardar cambios
+
+                a.btn.btn-outline-secondary.rounded-pill.px-4(
+                  href="/me"
+                )
+                  | Cancelar

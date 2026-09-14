@@ -55,6 +55,7 @@ export async function getMyDashboard(userId) {
           description: report.description,
           createdAt: report.createdAt?.toLocaleDateString("es-AR"),
         })) || [],
+      commentsEnabled: post.commentsEnabled,
     })),
   }
 }

@@ -122,6 +122,7 @@ export async function getFeedPosts(currentUser, filters = {}) {
         content: comment.content,
         username: comment.User.username,
       })) || [],
+      commentsEnabled: post.commentsEnabled
     }
   })
 }

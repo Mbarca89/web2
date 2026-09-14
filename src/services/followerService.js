@@ -1,4 +1,5 @@
 import Follower from "../models/Follower.js"
+import { createNotification } from "./notificationService.js"
 
 export async function toggleFollow({ followerId, followingId }) {
     console.log("TOGGLE FOLLOW - followerId:", followerId, "followingId:", followingId);

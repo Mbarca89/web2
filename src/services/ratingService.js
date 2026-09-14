@@ -1,5 +1,6 @@
 import PostRating from "../models/PostRating.js"
 import Post from "../models/Post.js"
+import { createNotification } from "./notificationService.js"
 
 export async function ratePost({ postId, userId, value }) {
 
