@@ -8,6 +8,7 @@ import PostRating from "./PostRating.js"
 import PostComment from "./PostComment.js"
 import Follower from "./Follower.js"
 import PostReport from "./PostReport.js"
+import Notification from "./Notification.js"
 
 User.hasMany(Post, {
   foreignKey: "user_id",
@@ -121,3 +122,15 @@ PostReport.belongsTo(User, {
   foreignKey: "reporter_id", as: "Reporter"
 })
 
+User.hasMany(Notification, {
+  foreignKey: "user_id",
+})
+
+Notification.belongsTo(User, {
+  foreignKey: "user_id",
+})
+
+Notification.belongsTo(User, {
+  foreignKey: "actor_id",
+  as: "Actor",
+})

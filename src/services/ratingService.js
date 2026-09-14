@@ -13,7 +13,7 @@ export async function ratePost({ postId, userId, value }) {
 
     const post = await Post.findByPk(postId)
 
-    if (post.user_id === userId || post.userId === userId) {
+    if (post.user_id === userId) {
         throw new Error("No podés valorar tu propia publicación")
     }
 
@@ -39,6 +39,14 @@ export async function ratePost({ postId, userId, value }) {
 
     const ratingAvg =
         ratings.reduce((acc, item) => acc + item.value, 0) / ratings.length
+
+    await createNotification({
+        userId: post.user_id,
+        actorId: userId,
+        type: "RATING",
+        message: "valoro tu publicación",
+        link: `/feed#post-${postId}`,
+    })
 
     return {
         ratingAvg: Number(ratingAvg.toFixed(1)),

@@ -37,5 +37,7 @@ html(lang="es")
     script(src="/bootstrap/js/bootstrap.bundle.min.js")
     script(src="/toastify/toastify.js")
     script(src="/js/toasts.js")
+    if currentUser
+      script(src="/js/notifications.js")
 
     include /components/toasters

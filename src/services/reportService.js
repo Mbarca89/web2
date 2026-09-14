@@ -34,5 +34,13 @@ export async function createReport({ postId, reporterId, reason, description }) 
     description,
   })
 
+  await createNotification({
+    userId: post.user_id,
+    actorId: userId,
+    type: "REPORT",
+    message: "denuncio tu publicacion",
+    link: `/feed#post-${postId}`,
+  })
+
   return true
 }

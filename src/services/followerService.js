@@ -26,6 +26,14 @@ export async function toggleFollow({ followerId, followingId }) {
         followingId,
     })
 
+    await createNotification({
+        userId: followingId,
+        actorId: followerId,
+        type: "FOLLOW",
+        message: "comenzó a seguirte",
+        link: `/users/${followerId}`,
+    })
+
     return {
         following: true,
     }

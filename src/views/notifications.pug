@@ -1,0 +1,35 @@
+extends layouts/main
+
+block content
+  .container.py-5
+    .d-flex.justify-content-between.align-items-center.mb-4
+      h2.mb-0 Notificaciones
+
+      if notifications.length
+        button#markAllRead.btn.btn-outline-secondary.btn-sm(
+          type="button"
+        )
+          | Marcar todas como leídas
+
+    if !notifications.length
+      .alert.alert-light.border
+        | No tenés notificaciones.
+
+    else
+      .list-group
+        each notification in notifications
+          a.list-group-item.list-group-item-action.notification-item(
+            href=notification.link || "#"
+            data-id=notification.id
+            class=notification.isRead ? "" : "fw-semibold bg-light"
+          )
+
+            .d-flex.justify-content-between.align-items-start
+              div
+                if notification.Actor
+                  strong= notification.Actor.username
+
+                span.ms-1= notification.message
+
+              small.text-muted.ms-3
+                = new Date(notification.createdAt).toLocaleString("es-AR")
