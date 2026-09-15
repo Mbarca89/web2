@@ -9,6 +9,7 @@ import PostComment from "./PostComment.js"
 import Follower from "./Follower.js"
 import PostReport from "./PostReport.js"
 import Notification from "./Notification.js"
+import Collection from "./Collection.js"
 
 User.hasMany(Post, {
   foreignKey: "user_id",
@@ -133,4 +134,30 @@ Notification.belongsTo(User, {
 Notification.belongsTo(User, {
   foreignKey: "actor_id",
   as: "Actor",
+})
+
+User.hasMany(Collection, {
+  foreignKey: "user_id",
+  as: "Collections",
+})
+
+Collection.belongsTo(User, {
+  foreignKey: "user_id",
+  as: "User",
+})
+
+Collection.belongsToMany(Post, {
+  through: "collection_posts",
+  foreignKey: "collection_id",
+  otherKey: "post_id",
+  timestamps: false,
+  as: "Posts",
+})
+
+Post.belongsToMany(Collection, {
+  through: "collection_posts",
+  foreignKey: "post_id",
+  otherKey: "collection_id",
+  timestamps: false,
+  as: "Collections",
 })

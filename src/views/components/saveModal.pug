@@ -1,0 +1,45 @@
+.modal.fade#collectionModal(tabindex="-1" aria-hidden="true")
+  .modal-dialog.modal-dialog-centered
+    .modal-content.rounded-4.border-0
+      .modal-header
+        h5.modal-title Guardar publicación
+        button.btn-close(
+          type="button"
+          data-bs-dismiss="modal"
+          aria-label="Cerrar"
+        )
+
+      .modal-body
+        input#collectionPostId(type="hidden")
+
+        p.text-muted.mb-2 Guardar en:
+
+        select#collectionSelect.form-select.mb-3
+          option(value="") Seleccioná una colección
+
+        .border-top.pt-3
+          label.form-label.small.fw-semibold Crear nueva colección
+
+          .input-group
+            input#newCollectionName.form-control(
+              type="text"
+              maxlength="100"
+              placeholder="Ej: Paisajes"
+            )
+
+            button#createCollectionBtn.btn.btn-fotaza-outline(
+              type="button"
+            )
+              | Crear
+
+      .modal-footer
+        button.btn.btn-fotaza-outline.rounded-pill(
+          type="button"
+          data-bs-dismiss="modal"
+        )
+          | Cancelar
+
+        button#saveToCollectionBtn.btn.btn-fotaza.rounded-pill(
+          type="button"
+        )
+          | Guardar

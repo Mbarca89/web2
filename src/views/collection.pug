@@ -1,0 +1,40 @@
+extends /layouts/main
+
+block content
+  main.container.py-5
+    .mb-4
+      a.text-decoration-none.text-muted(href="/collections")
+        i.bi.bi-arrow-left.me-2
+        | Mis colecciones
+
+      h1.h3.fw-bold.mt-3= collection.name
+
+    if collection.Posts.length
+      .row.g-4
+        each post in collection.Posts
+          .col-12.col-md-6.col-lg-4
+            .card.border-0.shadow-sm.rounded-4.h-100
+              if post.PostImages && post.PostImages.length
+                img.card-img-top.object-fit-cover(
+                  src=post.PostImages[0].imageData
+                  alt=post.title
+                  style="height:220px;"
+                )
+
+              .card-body
+                h2.h6.fw-bold= post.title
+
+                if post.description
+                  p.text-muted.small= post.description
+
+                button.btn.btn-sm.btn-outline-danger.remove-from-collection-btn(
+                  type="button"
+                  data-collection-id=collection.id
+                  data-post-id=post.id
+                )
+                  i.bi.bi-trash.me-1
+                  | Quitar
+    else
+      .card.border-0.shadow-sm.rounded-4
+        .card-body.text-center.p-5
+          p.text-muted.mb-0 Esta colección está vacía.

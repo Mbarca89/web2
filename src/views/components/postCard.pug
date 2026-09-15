@@ -97,7 +97,11 @@
             )
               | Valorar
         else if currentUser && post.ratedByCurrentUser
-            small.text-muted Ya valoraste
+            button.btn.btn-sm.rounded-pill.rate-btn(
+              type="button"
+              disabled
+            )
+              | Ya valoraste
         button.btn.btn-sm.btn-outline-danger.rounded-pill.report-btn(
           type="button"
           data-bs-toggle="modal"
@@ -106,6 +110,14 @@
         )
           i.me-1
           | Denunciar
+        button.btn.btn-fotaza-outline.rounded-pill.save-post-btn(
+          type="button"
+          data-post-id=post.id
+          data-bs-toggle="modal"
+          data-bs-target="#collectionModal"
+        )
+          i.bi.bi-bookmark.me-1
+          | Guardar  
     if post.comments && post.comments.length     
       .mt-3.border-top.pt-3.comments-section
         .comments-list.border.rounded-3.p-2.mb-3

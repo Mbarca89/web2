@@ -1,0 +1,36 @@
+extends /layouts/main
+
+block content
+  main.container.py-5
+    .d-flex.justify-content-between.align-items-center.mb-4
+      div
+        h1.h3.fw-bold.mb-1 Mis colecciones
+        p.text-muted.mb-0 Tus publicaciones guardadas.
+
+    if collections.length
+      .row.g-3
+        each collection in collections
+          .col-12.col-md-6.col-lg-4
+            a.text-decoration-none(
+              href=`/collections/${collection.id}`
+            )
+              .card.border-0.shadow-sm.rounded-4.h-100
+                .card-body.p-4
+                  .d-flex.align-items-center.gap-3
+                    .rounded-circle.bg-light.d-flex.align-items-center.justify-content-center(
+                      style="width:48px;height:48px;"
+                    )
+                      i.bi.bi-folder.fs-4.text-dark
+
+                    div
+                      h2.h6.fw-bold.text-dark.mb-1= collection.name
+                      small.text-muted
+                        | #{collection.Posts.length} publicaciones
+
+    else
+      .card.border-0.shadow-sm.rounded-4
+        .card-body.text-center.p-5
+          i.bi.bi-folder.fs-1.text-muted
+          h2.h5.mt-3 Todavía no tenés colecciones
+          p.text-muted.mb-0
+            | Guardá una publicación para crear tu primera colección.
