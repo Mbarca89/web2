@@ -35,14 +35,17 @@ export async function createPostService({ userId, body, files }) {
     );
 
     for (const file of files) {
-      const imageData = await convertImage(file)
+
+      const watermark = licenseType === "COPYRIGHT" ? watermarkText : null
+
+      const imageData = await convertImage(file, watermark)
 
       await PostImage.create(
         {
           post_id: post.id,
           imageData,
           licenseType,
-          watermarkText: licenseType === "COPYRIGHT" ? watermarkText : null,
+          watermarkText: watermark,
           isForSale: isForSale === "on",
           price: isForSale === "on" && price ? price : null,
         },
