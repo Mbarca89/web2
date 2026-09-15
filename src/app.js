@@ -16,6 +16,7 @@ import reportRoutes from "./routes/reportRoutes.js"
 import meRoutes from "./routes/meRoutes.js"
 import notificationRoutes from "./routes/notificationRoutes.js"
 import collectionRoutes from "./routes/collectionRoutes.js"
+import messageRoutes from "./routes/messageRoutes.js"
 
 import path from "path"
 import { fileURLToPath } from "url"
@@ -62,6 +63,7 @@ app.use("/reports", reportRoutes)
 app.use("/me", meRoutes)
 app.use("/notifications", notificationRoutes)
 app.use("/collections", collectionRoutes)
+app.use("/messages", messageRoutes)
 
 app.get("/", (req, res) => {
   res.render("landing", {

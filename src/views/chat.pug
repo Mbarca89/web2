@@ -1,0 +1,47 @@
+extends /layouts/main
+
+block content
+  main.container.py-5
+    .row.justify-content-center
+      .col-12.col-lg-8
+
+        a.text-decoration-none.text-muted(href="/messages")
+          i.bi.bi-arrow-left.me-2
+          | Mensajes
+
+        .card.border-0.shadow-sm.rounded-4.mt-3
+          .card-header.bg-white.p-4
+            -
+              const otherUser =
+                Number(currentUser.id) === Number(conversation.Buyer.id)
+                  ? conversation.Seller
+                  : conversation.Buyer
+
+            h1.h5.fw-bold.mb-1= otherUser.username
+
+            small.text-muted
+              | Publicación: #{conversation.Post.title}
+
+          .card-body
+            #chatMessages(
+              data-conversation-id=conversation.id
+              data-current-user-id=currentUser.id
+              style="height:450px;overflow-y:auto;"
+            )
+
+          .card-footer.bg-white.p-3
+            form#messageForm
+              .input-group
+                input#messageInput.form-control(
+                  type="text"
+                  maxlength="1000"
+                  autocomplete="off"
+                  placeholder="Escribí un mensaje..."
+                  required
+                )
+
+                button.btn.btn-fotaza(type="submit")
+                  i.bi.bi-send.me-1
+                  | Enviar
+
+  script(src="/js/chat.js")

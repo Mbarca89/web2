@@ -1,0 +1,54 @@
+extends /layouts/main
+
+block content
+  main.container.py-5
+    .row.justify-content-center
+      .col-12.col-lg-8
+
+        .mb-4
+          h1.h3.fw-bold.mb-1 Mensajes
+          p.text-muted.mb-0 Tus conversaciones privadas.
+
+        if conversations.length
+          .list-group.shadow-sm.rounded-4.overflow-hidden
+
+            each conversation in conversations
+
+              -
+                const otherUser =
+                  Number(currentUser.id) === Number(conversation.Buyer.id)
+                    ? conversation.Seller
+                    : conversation.Buyer
+
+                const lastMessage =
+                  conversation.Messages &&
+                  conversation.Messages.length
+                    ? conversation.Messages[0]
+                    : null
+
+              a.list-group-item.list-group-item-action.p-4(
+                href=`/messages/${conversation.id}`
+              )
+                .d-flex.justify-content-between.gap-3
+                  div
+                    h2.h6.fw-bold.mb-1= otherUser.username
+
+                    p.small.text-muted.mb-2
+                      | Publicación: #{conversation.Post.title}
+
+                    if lastMessage
+                      p.mb-0.text-truncate= lastMessage.content
+                    else
+                      p.mb-0.text-muted
+                        | Todavía no hay mensajes.
+
+                  small.text-muted
+                    = new Date(conversation.createdAt).toLocaleDateString("es-AR")
+
+        else
+          .card.border-0.shadow-sm.rounded-4
+            .card-body.text-center.p-5
+              i.bi.bi-chat-dots.fs-1.text-muted
+              h2.h5.mt-3 No tenés conversaciones
+              p.text-muted.mb-0
+                | Cuando alguien se interese por una publicación aparecerá acá.

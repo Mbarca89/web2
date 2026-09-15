@@ -10,6 +10,8 @@ import Follower from "./Follower.js"
 import PostReport from "./PostReport.js"
 import Notification from "./Notification.js"
 import Collection from "./Collection.js"
+import Conversation from "./Conversation.js"
+import Message from "./Message.js"
 
 User.hasMany(Post, {
   foreignKey: "user_id",
@@ -160,4 +162,54 @@ Post.belongsToMany(Collection, {
   otherKey: "collection_id",
   timestamps: false,
   as: "Collections",
+})
+
+Post.hasMany(Conversation, {
+  foreignKey: "post_id",
+  as: "Conversations",
+})
+
+Conversation.belongsTo(Post, {
+  foreignKey: "post_id",
+  as: "Post",
+})
+
+User.hasMany(Conversation, {
+  foreignKey: "buyer_id",
+  as: "BoughtConversations",
+})
+
+Conversation.belongsTo(User, {
+  foreignKey: "buyer_id",
+  as: "Buyer",
+})
+
+User.hasMany(Conversation, {
+  foreignKey: "seller_id",
+  as: "SoldConversations",
+})
+
+Conversation.belongsTo(User, {
+  foreignKey: "seller_id",
+  as: "Seller",
+})
+
+Conversation.hasMany(Message, {
+  foreignKey: "conversation_id",
+  as: "Messages",
+})
+
+Message.belongsTo(Conversation, {
+  foreignKey: "conversation_id",
+  as: "Conversation",
+})
+
+User.hasMany(Message, {
+  foreignKey: "sender_id",
+  as: "Messages",
+})
+
+Message.belongsTo(User, {
+  foreignKey: "sender_id",
+  as: "Sender",
 })

@@ -118,6 +118,13 @@
         )
           i.bi.bi-bookmark.me-1
           | Guardar  
+        if post.isForSale
+          button.btn.btn-fotaza-outline.interest-btn.rounded-pill(
+            type="button"
+            data-post-id=post.id
+          )
+            i.bi.bi-chat-heart.me-1
+            | Me interesa  
     if post.comments && post.comments.length     
       .mt-3.border-top.pt-3.comments-section
         .comments-list.border.rounded-3.p-2.mb-3
